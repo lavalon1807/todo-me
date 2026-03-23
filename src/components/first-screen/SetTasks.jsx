@@ -1,8 +1,12 @@
+import "./first-screen.css";
+
 const SetTasks = () => {
-    return(
-        <div>
-            <header className="header">My Tasks</header>
-            <input type="text" placeholder="Напишите свою задачу..."/>
+    return (
+        <>
+            <header className="header theme">
+                <h1 class="h1">Мои Задачи</h1>
+            </header>
+            <input type="text" placeholder="Напишите свою задачу..." />
             <button className="button-add">Добавить</button>
             <div className="main__page">
                 <img className="main__picture" src="#" alt="Картинка" />
@@ -12,8 +16,8 @@ const SetTasks = () => {
                 </div>
             </div>
             <div className="footer">© 2025</div>
-        </div>
-    )
-}
+        </>
+    );
+};
 
 export default SetTasks;
