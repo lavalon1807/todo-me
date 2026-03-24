@@ -15,19 +15,26 @@ const Task = () => {
                 <div className="added-task__task">
                     <ul className="task__list">
                         <li className="task__item">
-                            <label>
-                                <input type="checkbox" name="myRadio" value="option1" />
-                                Изучаем Реакт
-                            </label>
-                            <button className="button__icon pencil" type="button"></button>
-                            <button className="button__icon trash" type="button"></button>
+                            <input
+                                type="checkbox"
+                                name="myRadio"
+                                value="option1"
+                                id="check"
+                            />
+                            <label for="check">Изучаем Реакт</label>
+                            <button
+                                className="button__icon pencil"
+                                type="button"></button>
+                            <button
+                                className="button__icon trash"
+                                type="button"></button>
                         </li>
                     </ul>
                 </div>
             </div>
             <div className="mp__footer">© 2025</div>
         </>
-    )
-}
+    );
+};
 
 export default Task;

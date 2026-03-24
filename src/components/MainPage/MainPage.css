@@ -31,7 +31,7 @@
     margin-right: 25px;
 
     &::placeholder {
-        color: #A9A9A9;
+        color: #a9a9a9;
     }
 }
 
@@ -81,10 +81,9 @@
     column-gap: 10px;
     font-family: Lato;
     font-size: 20px;
-    color: #6A7282;
+    color: #6a7282;
 
     .nav__item {
-
         &.active {
             color: #333333;
         }
@@ -94,13 +93,15 @@
 .added-task__todo {
     font-family: Loto;
     font-size: 20px;
-    color: #6A7282;
+    color: #6a7282;
 }
 
 .added-task__navigation {
     display: flex;
     justify-content: space-between;
     margin-top: 30px;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
 .task__list {
@@ -117,16 +118,15 @@
         background-color: #ffffff;
         display: flex;
 
+        input {
+            margin-right: 20px;
+            width: 24px;
+            height: 24px;
+        }
+
         label {
             font-size: 24px;
             width: 100%;
-
-            input {
-                margin-right: 20px;
-                width: 24px;
-                height: 24px;
-                border: 2px solid #333333;
-            }
         }
     }
 }
@@ -152,9 +152,7 @@
 }
 
 @media (max-width: 1023px) {
-
     .mp__header {
-
         .h1 {
             font-size: 36px;
         }
@@ -174,10 +172,27 @@
     .info__picture {
         width: 37%;
     }
+
+    .task__list {
+        .task__item {
+            padding: 20px;
+
+            label {
+                font-size: 18px;
+            }
+        }
+    }
+
+    .nav__list {
+        font-size: 18px;
+    }
+
+    .mp__added-task {
+        max-width: 590px;
+    }
 }
 
 @media (max-width: 767px) {
-
     .mp__task_input {
         max-width: 80%;
         margin: 0 auto;
@@ -199,5 +214,37 @@
     .mp__header {
         margin-top: 60px;
         margin-bottom: 50px;
+    }
+
+    .task__list {
+        .task__item {
+            padding: 10px;
+            padding-left: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            position: relative;
+
+            input {
+                margin-right: 5px;
+                width: 15px;
+                height: 15px;
+                position: absolute;
+                left: 7px;
+                top: 11px;
+            }
+
+            label {
+                font-size: 14px;
+                line-height: 24px;
+            }
+        }
+    }
+
+    .button__icon {
+        margin-right: 10px;
+        width: 15px;
+        height: 15px;
+        background-size: 15px;
     }
 }
