@@ -2,6 +2,11 @@ body {
     background-color: #f3f4f6;
 }
 
+p,
+ul {
+    margin: 0;
+}
+
 .App {
     display: flex;
     min-height: 100vh;
@@ -10,11 +15,6 @@ body {
 
 .hidden {
     display: none;
-}
-
-.burger__page {
-    max-width: 130px;
-    background-color: #ffffff;
 }
 
 .wrapper {
@@ -60,10 +60,6 @@ body {
         background-size: 100%;
         width: 40px;
         height: 40px;
-    }
-
-    .burger__page {
-        max-width: 100px;
     }
 }
 

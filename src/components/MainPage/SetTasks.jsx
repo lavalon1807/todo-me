@@ -12,7 +12,7 @@ const SetTasks = () => {
                 <button className="button button-add">+&nbsp;Добавить</button>
             </div>
 
-            <div className="mp__info">
+            <div className="mp__info hidden">
                 <img className="info__picture" src={imageSelf} alt="Картинка" />
                 <div className="info__text">
                     Пусто, как моя мотивация в&nbsp;понедельник 😅. <br />
