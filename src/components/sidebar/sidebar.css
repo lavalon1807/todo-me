@@ -29,3 +29,45 @@
         background-color: #f3f4f6;
     }
 }
+
+@media (max-width: 1023px) {
+
+    .burger {
+        margin: 25px;
+        width: 40px;
+        height: 40px;
+
+        img {
+            width: 40px;
+            height: 40px;
+        }
+    }
+
+    .button__info {
+        img {
+            width: 40px;
+            height: 40px;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    
+    .burger {
+        margin: 13px;
+        width: 30px;
+        height: 30px;
+
+        img {
+            width: 30px;
+            height: 30px;
+        }
+    }
+
+    .button__info {
+        img {
+            width: 30px;
+            height: 30px;
+        }
+    }
+}
