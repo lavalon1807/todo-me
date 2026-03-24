@@ -24,13 +24,6 @@ const Navigations = () => {
                 />
                 <p className="text hidden">Настройка</p>
             </div>
-            <nav className="menu hidden">
-                <ul className="menu__list">
-                    <li className="menu__item">Все</li>
-                    <li className="menu__item">Активные</li>
-                    <li className="menu__item">Завершенные</li>
-                </ul>
-            </nav>
         </>
     );
 };
