@@ -3,7 +3,7 @@ import "./App.css";
 import Author from "./components/sidebar/Author";
 import Navigations from "./components/sidebar/Navigations";
 import SetTasks from "./components/MainPage/SetTasks";
-import Task from "./components/MainPage/Task";
+import TasksList from "./components/MainPage/TasksList";
 
 function App() {
     return (
@@ -14,7 +14,7 @@ function App() {
             </div>
             <div class="main__page wrapper">
                 <SetTasks />
-                <Task />
+                <TasksList />
             </div>
         </div>
     );

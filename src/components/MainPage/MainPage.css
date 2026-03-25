@@ -59,14 +59,10 @@
 }
 
 .mp__footer {
-    position: fixed;
-    bottom: 45px;
-    left: 53%;
     width: 100%;
-
-    &.show {
-        left: 67%;
-    }
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 30px;
 }
 
 .mp__added-task {
