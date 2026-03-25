@@ -1,20 +1,8 @@
 import Task from "./Task";
 
-const TasksList = () => {
-    const taskMessanger = [
-        {
-            id: 1,
-            name: "Курсы реакт"
-        },
-        {
-            id: 2,
-            name: "Курсы пайтон"
-        },
-        {
-            id: 3,
-            name: "Курсы пхп"
-        },
-    ]
+const TasksList = (props) => {
+    const { todo } = props;
+
     return (
         <>
             <div className="mp__added-task">
@@ -30,7 +18,9 @@ const TasksList = () => {
                 </nav>
                 <div className="added-task__task">
                     <ul className="task__list">
-                        {taskMessanger.map((item) => (<Task key={item.id} name={item.name} />))}
+                        {/* {todo.map((items) => (
+                            <Task key={items.id} items={items} />
+                        ))} */}
                     </ul>
                 </div>
             </div>

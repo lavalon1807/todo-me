@@ -1,5 +1,4 @@
-const Task = (props) => {
-    const {name} = props;
+const Task = () => {
     return (
         <>
             <li className="task__item">
@@ -9,16 +8,12 @@ const Task = (props) => {
                     value="option1"
                     id="check"
                 />
-                <label for="check">{name}</label>
-                <button
-                    className="button__icon pencil"
-                    type="button"></button>
-                <button
-                    className="button__icon trash"
-                    type="button"></button>
+                <label htmlFor="check">Изучить реакт</label>
+                <button className="button__icon pencil" type="button"></button>
+                <button className="button__icon trash" type="button"></button>
             </li>
         </>
-    )
-}
+    );
+};
 
 export default Task;
