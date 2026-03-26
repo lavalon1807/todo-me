@@ -1,7 +1,6 @@
 import Task from "./Task";
 
-const TasksList = (props) => {
-    const { todo } = props;
+const TasksList = ({todoSetTask, removeTask, editTask}) => {
 
     return (
         <>
@@ -18,9 +17,9 @@ const TasksList = (props) => {
                 </nav>
                 <div className="added-task__task">
                     <ul className="task__list">
-                        {/* {todo.map((items) => (
-                            <Task key={items.id} items={items} />
-                        ))} */}
+                        {todoSetTask.map((todoSetTask) => (
+                            <Task key={todoSetTask.id} items={todoSetTask} removeTask={removeTask} editTask={editTask} />
+                        ))}
                     </ul>
                 </div>
             </div>

@@ -13,6 +13,11 @@ ul {
     color: #333333;
 }
 
+.linethrough {
+    text-decoration: line-through;
+    color: #6A7282;
+}
+
 .hidden {
     display: none;
 }
