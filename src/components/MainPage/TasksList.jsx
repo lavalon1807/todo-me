@@ -1,13 +1,13 @@
 import Task from "./Task";
 
-const TasksList = ({ todoSetTask, removeTask, toggleTask, handleEditText, handleChange, addTask, addEditText, handleEditChange, textDefaultUser, chooseTask, filterList, filterHandle, filter }) => {
+const TasksList = ({ todoSetTask, removeTask, toggleTask, handleEditText, handleChange, addTask, addEditText, handleEditChange, textDefaultUser, chooseTask, filterList, filterHandle, filterPoint }) => {
     return (
         <>
             <div className="mp__added-task">
                 <nav className="added-task__navigation">
                     <ul className="nav__list">
                         {filterList.map((item, index) => (
-                            <li className={item.name === filter ? "nav__item active" : "nav__item"} onClick={() => filterHandle(item.name)} key={index} >{item.name}</li>
+                            <li className={item.name === filterPoint ? "nav__item active" : "nav__item"} onClick={() => filterHandle(item.name)} key={index} >{item.name}</li>
                         ))}
                     </ul>
                     <div className="added-task__todo">

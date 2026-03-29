@@ -10,7 +10,7 @@ const Task = ({ items, removeTask, toggleTask, handleEditText, handleChange, add
                     </>
                 ) : (
                     <>
-                        <input type="checkbox" className="main__text" onClick={() => toggleTask(items.id)} />
+                        <input type="checkbox" className="main__text" onClick={() => toggleTask(items.id)} defaultChecked={items.flag} />
                         <span className={items.flag ? "linethrough user__text" : "user__text"}>
                             {items.task}
                         </span>

@@ -5,11 +5,10 @@ import { useState } from "react";
 
 const SetTasks = () => {
     const [todo, setTodo] = useState([]);
-    const [disTodo, setDisTodo] = useState([]);
+    const [filteredTasks, setFilteredTasks] = useState([]);
     const [textUser, setTextUser] = useState("");
     const [textDefaultUser, setTextDefaultUser] = useState("");
-
-    const [filter, setFilter] = useState('Все');
+    const [filterPoint, setFilterPoint] = useState('Все');
 
     const filterList = [
         {
@@ -23,23 +22,22 @@ const SetTasks = () => {
         },
     ];
 
-    const newFilterTodo = (filterType, todo) => {
-        switch(filterType) {
+    const filterTasks = (filterType, tasksArray) => {
+        switch (filterType) {
             case "Активные":
-                return todo.filter(obj => !obj.flag);
+                return tasksArray.filter(obj => !obj.flag);
             case "Завершенные":
-                return todo.filter(obj => obj.flag);
+                return tasksArray.filter(obj => obj.flag);
             default:
-                return todo;
+                return tasksArray;
         }
     }
 
     const filterHandle = (name) => {
-        setFilter(name);
-        setDisTodo(newFilterTodo(name, todo))
+        setFilterPoint(name);
+        const filtered = filterTasks(name, todo);
+        setFilteredTasks(filtered);
     }
-
-
 
     const addTask = (evt) => {
         evt.preventDefault();
@@ -50,7 +48,9 @@ const SetTasks = () => {
                 flag: false,
                 edit: false,
             }
-            setTodo([...todo, newTask])
+            const updatedTasks = [...todo, newTask];
+            setTodo(updatedTasks)
+            setFilteredTasks(filterTasks(filterPoint, updatedTasks));
             setTextUser('');
         }
     }
@@ -60,15 +60,35 @@ const SetTasks = () => {
             obj.id !== id
         )
         setTodo(taskAfterRemove)
+        setFilteredTasks(filterTasks(filterPoint, taskAfterRemove));
     }
 
     const toggleTask = (id) => {
-        setTodo([...todo.map((item) => item.id === id ? { ...item, flag: !item.flag } : { ...item })])
+        const updatedTasks = todo.map(task =>
+            task.id === id ? { ...task, flag: !task.flag } : task
+        );
+        setTodo(updatedTasks)
+        setFilteredTasks(filterTasks(filterPoint, updatedTasks));
+    };
+
+    const addEditText = (id) => {
+        if (textDefaultUser) {
+            const updatedTasks = todo.map(task =>
+                task.id === id ? { ...task, task: textDefaultUser, edit: false } : task
+            );
+            setTodo(updatedTasks);
+            setFilteredTasks(filterTasks(filterPoint, updatedTasks));
+            setTextDefaultUser('');
+        }
     };
 
     const handleEditText = (id) => {
-        setTodo([...todo.map((item) => item.id === id ? { ...item, edit: !item.edit } : { ...item })])
-    }
+        const updatedTasks = todo.map(task =>
+            task.id === id ? { ...task, edit: !task.edit } : task
+        );
+        setTodo(updatedTasks);
+        setFilteredTasks(filterTasks(filterPoint, updatedTasks));
+    };
 
     const handleChange = (evt) => {
         setTextUser(evt.target.value);
@@ -78,15 +98,8 @@ const SetTasks = () => {
         setTextDefaultUser(evt.target.value)
     }
 
-    const addEditText = (id) => {
-        if (textDefaultUser) {
-            setTodo([...todo.map((item) => item.id === id ? { ...item, task: item.task = textDefaultUser } : { ...item })])
-            setTodo([...todo.map((item) => item.id === id ? { ...item, edit: !item.edit } : { ...item })])
-        }
-    }
-
     return (
-        <>
+        <>  
             <header className="mp__header theme">
                 <h1 className="h1">Мои Задачи</h1>
             </header>
@@ -105,7 +118,7 @@ const SetTasks = () => {
 
             <TasksList
                 key={todo.id}
-                todoSetTask={todo}
+                todoSetTask={filteredTasks}
                 removeTask={removeTask}
                 toggleTask={toggleTask}
                 handleEditText={handleEditText}
@@ -116,7 +129,7 @@ const SetTasks = () => {
                 textDefaultUser={textDefaultUser}
                 filterList={filterList}
                 filterHandle={filterHandle}
-                filter={filter}
+                filterPoint={filterPoint}
             />
 
             <div className="mp__info hidden">
