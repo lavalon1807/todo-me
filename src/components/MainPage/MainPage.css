@@ -33,6 +33,10 @@
     &::placeholder {
         color: #a9a9a9;
     }
+
+    &.input__dark {
+        background-color: #4A5565;
+    }
 }
 
 .mp__info {

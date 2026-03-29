@@ -1,14 +1,20 @@
 import "./MainPage.css";
 import imageSelf from "../../images/fs_image.png";
 import TasksList from "./TasksList";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const SetTasks = () => {
+const SetTasks = ({toggleMode, night}) => {
     const [todo, setTodo] = useState([]);
     const [filteredTasks, setFilteredTasks] = useState([]);
     const [textUser, setTextUser] = useState("");
     const [textDefaultUser, setTextDefaultUser] = useState("");
     const [filterPoint, setFilterPoint] = useState('Все');
+    const [unfinishTasks, setUnfinishTask] = useState(0);
+
+    useEffect(() => {
+        const filterUnfinishTasks = todo.map(item => item.flag);
+        setUnfinishTask(filterUnfinishTasks.length)
+    }, [todo]);
 
     const filterList = [
         {
@@ -49,7 +55,7 @@ const SetTasks = () => {
                 edit: false,
             }
             const updatedTasks = [...todo, newTask];
-            setTodo(updatedTasks)
+            setTodo(updatedTasks);
             setFilteredTasks(filterTasks(filterPoint, updatedTasks));
             setTextUser('');
         }
@@ -100,18 +106,22 @@ const SetTasks = () => {
 
     return (
         <>  
-            <header className="mp__header theme">
+            <header className="mp__header">
+                <span className="theme" onClick={toggleMode}></span>
                 <h1 className="h1">Мои Задачи</h1>
             </header>
             <form className="mp__task">
                 <input
-                    className="mp__task_input"
+                    className={night ? 'mp__task_input input__dark' : 'mp__task_input'}
                     type="text"
                     placeholder="Напиши свою задачу..."
                     onChange={handleChange}
                     value={textUser}
                 />
-                <button className="button button-add" onClick={addTask}>
+                <button 
+                 className={night ? 'button button-add input__dark' : 'button button-add'}
+                 onClick={addTask}
+                >
                     +&nbsp;Добавить
                 </button>
             </form>
@@ -130,15 +140,18 @@ const SetTasks = () => {
                 filterList={filterList}
                 filterHandle={filterHandle}
                 filterPoint={filterPoint}
+                unfinishTasks={unfinishTasks}
             />
 
-            <div className="mp__info hidden">
+            <div className={unfinishTasks === null || unfinishTasks === 0 ? 'mp__info' : 'hidden mp__info'} >
                 <img className="info__picture" src={imageSelf} alt="Картинка" />
                 <div className="info__text">
                     Пусто, как моя мотивация в&nbsp;понедельник 😅. <br />
                     Давай начинай добавлять задачи!
                 </div>
             </div>
+
+            <div className="mp__footer">© 2025</div>
         </>
     );
 };

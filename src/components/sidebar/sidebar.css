@@ -26,6 +26,10 @@
     hr {
         max-width: 80%;
     }
+
+    &.bar__dark {
+        background-color: #1E2939;
+    }
 }
 
 .button__info {

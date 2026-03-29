@@ -1,9 +1,10 @@
 import Task from "./Task";
 
-const TasksList = ({ todoSetTask, removeTask, toggleTask, handleEditText, handleChange, addTask, addEditText, handleEditChange, textDefaultUser, chooseTask, filterList, filterHandle, filterPoint }) => {
+const TasksList = ({ todoSetTask, removeTask, toggleTask, handleEditText, handleChange, addTask, addEditText, handleEditChange, textDefaultUser, unfinishTasks, chooseTask, filterList, filterHandle, filterPoint }) => {
+
     return (
         <>
-            <div className="mp__added-task">
+            <div className={unfinishTasks === null || unfinishTasks === 0 ? 'hidden mp__added-task' : 'mp__added-task'}>
                 <nav className="added-task__navigation">
                     <ul className="nav__list">
                         {filterList.map((item, index) => (
@@ -11,7 +12,7 @@ const TasksList = ({ todoSetTask, removeTask, toggleTask, handleEditText, handle
                         ))}
                     </ul>
                     <div className="added-task__todo">
-                        2&nbsp;задачи осталось
+                        Невыполненные задачи:&nbsp;{unfinishTasks}
                     </div>
                 </nav>
                 <div className="added-task__task">
@@ -33,7 +34,6 @@ const TasksList = ({ todoSetTask, removeTask, toggleTask, handleEditText, handle
                     </ul>
                 </div>
             </div>
-            <div className="mp__footer">© 2025</div>
         </>
     );
 };

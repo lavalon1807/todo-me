@@ -11,6 +11,10 @@ ul {
     display: flex;
     min-height: 100vh;
     color: #333333;
+
+    &.app__dark {
+        background-color: #101828;
+    }
 }
 
 .linethrough {
@@ -49,6 +53,10 @@ ul {
     &:active {
         box-shadow: 0px 2px 4px 0px #000000bf;
     }
+
+    &.input__dark {
+        background-color: #4A5565;
+    }
 }
 
 .theme::after {
@@ -61,6 +69,7 @@ ul {
     background-repeat: no-repeat;
     width: 50px;
     height: 50px;
+    cursor: pointer;
 }
 
 @media (max-width: 1023px) {
