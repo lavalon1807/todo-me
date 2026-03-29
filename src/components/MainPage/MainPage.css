@@ -80,7 +80,14 @@
     color: #6a7282;
 
     .nav__item {
+        cursor: pointer;
+
+        &:hover {
+            color: #333333;
+        }
+
         &.active {
+            cursor: default;
             color: #333333;
         }
     }
@@ -114,10 +121,23 @@
         background-color: #ffffff;
         display: flex;
 
-        input {
+        .main__text {
             margin-right: 20px;
             width: 24px;
             height: 24px;
+        }
+
+        .edit__text {
+            width: 100%;
+            border-radius: 10px;
+            font-family: Loto;
+            font-size: 20px;
+            padding: 10px 20px;
+        }
+
+        .button__edit {
+            margin-left: 30px;
+            width: unset;
         }
 
         span {
@@ -215,13 +235,12 @@
     .task__list {
         .task__item {
             padding: 10px;
-            padding-left: 30px;
             flex-wrap: wrap;
             justify-content: center;
             gap: 15px;
             position: relative;
 
-            input {
+            .task__item-text {
                 margin-right: 5px;
                 width: 15px;
                 height: 15px;
@@ -230,9 +249,11 @@
                 top: 11px;
             }
 
-            span {
-                font-size: 14px;
+            .user__text {
+                font-size: 16px;
                 line-height: 24px;
+                font-family: Loto;
+                font-weight: 600;
             }
         }
     }

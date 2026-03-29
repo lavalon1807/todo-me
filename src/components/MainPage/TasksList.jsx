@@ -1,15 +1,14 @@
 import Task from "./Task";
 
-const TasksList = ({todoSetTask, removeTask, editTask}) => {
-
+const TasksList = ({ todoSetTask, removeTask, toggleTask, handleEditText, handleChange, addTask, addEditText, handleEditChange, textDefaultUser, chooseTask, filterList, filterHandle, filter }) => {
     return (
         <>
             <div className="mp__added-task">
                 <nav className="added-task__navigation">
                     <ul className="nav__list">
-                        <li className="nav__item active">Все |</li>
-                        <li className="nav__item">Активные |</li>
-                        <li className="nav__item">Завершенные</li>
+                        {filterList.map((item, index) => (
+                            <li className={item.name === filter ? "nav__item active" : "nav__item"} onClick={() => filterHandle(item.name)} key={index} >{item.name}</li>
+                        ))}
                     </ul>
                     <div className="added-task__todo">
                         2&nbsp;задачи осталось
@@ -18,7 +17,18 @@ const TasksList = ({todoSetTask, removeTask, editTask}) => {
                 <div className="added-task__task">
                     <ul className="task__list">
                         {todoSetTask.map((todoSetTask) => (
-                            <Task key={todoSetTask.id} items={todoSetTask} removeTask={removeTask} editTask={editTask} />
+                            <Task
+                                key={todoSetTask.id}
+                                items={todoSetTask}
+                                removeTask={removeTask}
+                                toggleTask={toggleTask}
+                                handleEditText={handleEditText}
+                                handleChange={handleChange}
+                                addTask={addTask}
+                                addEditText={addEditText}
+                                handleEditChange={handleEditChange}
+                                textDefaultUser={textDefaultUser}
+                            />
                         ))}
                     </ul>
                 </div>

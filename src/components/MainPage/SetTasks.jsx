@@ -5,7 +5,41 @@ import { useState } from "react";
 
 const SetTasks = () => {
     const [todo, setTodo] = useState([]);
+    const [disTodo, setDisTodo] = useState([]);
     const [textUser, setTextUser] = useState("");
+    const [textDefaultUser, setTextDefaultUser] = useState("");
+
+    const [filter, setFilter] = useState('Все');
+
+    const filterList = [
+        {
+            'name': "Все",
+        },
+        {
+            'name': "Активные",
+        },
+        {
+            'name': "Завершенные",
+        },
+    ];
+
+    const newFilterTodo = (filterType, todo) => {
+        switch(filterType) {
+            case "Активные":
+                return todo.filter(obj => !obj.flag);
+            case "Завершенные":
+                return todo.filter(obj => obj.flag);
+            default:
+                return todo;
+        }
+    }
+
+    const filterHandle = (name) => {
+        setFilter(name);
+        setDisTodo(newFilterTodo(name, todo))
+    }
+
+
 
     const addTask = (evt) => {
         evt.preventDefault();
@@ -14,6 +48,7 @@ const SetTasks = () => {
                 id: Date.now(),
                 task: textUser,
                 flag: false,
+                edit: false,
             }
             setTodo([...todo, newTask])
             setTextUser('');
@@ -27,12 +62,27 @@ const SetTasks = () => {
         setTodo(taskAfterRemove)
     }
 
-    const editTask = (id) => {
-        setTodo([...todo.map((item) => item.id === id ? {...item, flag: !item.flag } : { ...item })])
+    const toggleTask = (id) => {
+        setTodo([...todo.map((item) => item.id === id ? { ...item, flag: !item.flag } : { ...item })])
     };
+
+    const handleEditText = (id) => {
+        setTodo([...todo.map((item) => item.id === id ? { ...item, edit: !item.edit } : { ...item })])
+    }
 
     const handleChange = (evt) => {
         setTextUser(evt.target.value);
+    }
+
+    const handleEditChange = (evt) => {
+        setTextDefaultUser(evt.target.value)
+    }
+
+    const addEditText = (id) => {
+        if (textDefaultUser) {
+            setTodo([...todo.map((item) => item.id === id ? { ...item, task: item.task = textDefaultUser } : { ...item })])
+            setTodo([...todo.map((item) => item.id === id ? { ...item, edit: !item.edit } : { ...item })])
+        }
     }
 
     return (
@@ -53,7 +103,21 @@ const SetTasks = () => {
                 </button>
             </form>
 
-            <TasksList key={todo.id} todoSetTask={todo} removeTask={removeTask} editTask={editTask} />
+            <TasksList
+                key={todo.id}
+                todoSetTask={todo}
+                removeTask={removeTask}
+                toggleTask={toggleTask}
+                handleEditText={handleEditText}
+                handleChange={handleChange}
+                addTask={addTask}
+                addEditText={addEditText}
+                handleEditChange={handleEditChange}
+                textDefaultUser={textDefaultUser}
+                filterList={filterList}
+                filterHandle={filterHandle}
+                filter={filter}
+            />
 
             <div className="mp__info hidden">
                 <img className="info__picture" src={imageSelf} alt="Картинка" />
