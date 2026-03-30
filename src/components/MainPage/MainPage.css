@@ -30,12 +30,16 @@
     outline: none;
     margin-right: 25px;
 
+    &:focus {
+        outline: 1px solid #ffffff;
+    }
+
     &::placeholder {
         color: #a9a9a9;
     }
 
     &.input__dark {
-        background-color: #4A5565;
+        background-color: #4a5565;
     }
 }
 
@@ -43,6 +47,10 @@
     display: flex;
     align-items: center;
     margin-top: 50px;
+    max-width: fit-content;
+    justify-content: center;
+    margin: 0 auto;
+    gap: 50px;
 
     &.hidden {
         display: none;
@@ -50,11 +58,11 @@
 }
 
 .info__picture {
-    width: 45%;
+    width: 20%;
 }
 
 .info__text {
-    width: 55%;
+    width: 60%;
     font-family: "Lato";
     font-style: italic;
     font-size: 24px;
@@ -190,7 +198,7 @@
     }
 
     .info__picture {
-        width: 37%;
+        width: 22%;
     }
 
     .task__list {
