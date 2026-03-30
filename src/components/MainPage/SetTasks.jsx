@@ -113,7 +113,7 @@ const SetTasks = ({ toggleMode, night }) => {
     return (
         <>
             <header className="mp__header">
-                <span className="theme" onClick={toggleMode}></span>
+                <span className={night ? "theme__dark" : "theme__light"} onClick={toggleMode}></span>
                 <h1 className={night ? "h1 white" : "h1"}>Мои Задачи</h1>
             </header>
             <form className="mp__task">

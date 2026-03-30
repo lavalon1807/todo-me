@@ -67,17 +67,27 @@ ul {
     }
 }
 
-.theme::after {
-    content: "";
-    display: inline-block;
-    position: absolute;
-    right: 45px;
-    top: 29px;
+.theme__light,
+.theme__dark {
+    &::after {
+        content: "";
+        display: inline-block;
+        position: absolute;
+        right: 45px;
+        top: 29px;
+        background-repeat: no-repeat;
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+    }
+}
+
+.theme__light::after {
     background-image: url("./images/moon.svg");
-    background-repeat: no-repeat;
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
+}
+
+.theme__dark::after {
+    background-image: url("./images/sun.svg");
 }
 
 @media (max-width: 1023px) {
@@ -86,16 +96,22 @@ ul {
         font-size: 18px;
     }
 
-    .theme::after {
-        background-size: 100%;
-        width: 40px;
-        height: 40px;
+    .theme__light,
+    .theme__dark {
+        &::after {
+            background-size: 100%;
+            width: 40px;
+            height: 40px;
+        }
     }
 }
 
 @media (max-width: 767px) {
-    .theme::after {
-        width: 30px;
+    .theme__light,
+    .theme__dark {
+        &::after {
+            width: 30px;
         height: 30px;
+        }
     }
 }

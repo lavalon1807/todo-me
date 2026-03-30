@@ -2,14 +2,13 @@
     margin: 35px;
     width: 48px;
     height: 48px;
+    cursor: pointer;
 }
 
 .burger,
-.auth__navigation {
+.button__info {
 
-    .show {
-        width: 32px;
-        height: 32px;
+    &.show {
 
         img {
             width: 32px;

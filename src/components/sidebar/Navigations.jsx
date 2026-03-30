@@ -1,10 +1,11 @@
 import iconMenu from "../../images/menu.png";
 import iconSetting from "../../images/settings.svg";
+import iconSettingWhite from "../../images/settings-white.svg";
 
-const Navigations = () => {
+const Navigations = ({night, burger}) => {
     return (
         <>
-            <div className="button__info active">
+            <div className={`button__info active ${burger ? "show" : ""}`}>
                 <img
                     className="icon"
                     src={iconMenu}
@@ -12,17 +13,17 @@ const Navigations = () => {
                     height="48"
                     alt="Иконка"
                 />
-                <p className="text hidden">Мои Задачи</p>
+                <p className={`text ${burger ? "" : "hidden"}`}>Мои Задачи</p>
             </div>
-            <div className="button__info">
+            <div className={burger ? "button__info show" : "button__info"}>
                 <img
                     className="icon"
-                    src={iconSetting}
+                    src={night ? iconSettingWhite : iconSetting }
                     width="48"
                     height="48"
                     alt="Иконка"
                 />
-                <p className="text hidden">Настройка</p>
+                <p className={`text ${burger && night ? "white" : burger ? "" : "hidden"}`}>Настройка</p>
             </div>
         </>
     );
