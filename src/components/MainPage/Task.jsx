@@ -1,4 +1,8 @@
-const Task = ({ items, removeTask, toggleTask, handleEditText, handleChange, addTask, addEditText, handleEditChange, textDefaultUser }) => {
+import { useContext } from "react";
+import { UserContext } from "../MainPage/SetTasks"
+
+const Task = ({ items }) => {
+    const {removeTask, addEditText, toggleTask, handleEditText, handleEditChange} = useContext(UserContext);
 
     return (
         <>

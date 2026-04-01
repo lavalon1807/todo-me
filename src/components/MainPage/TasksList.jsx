@@ -1,22 +1,11 @@
 import Task from "./Task";
+import { FILTER_LIST } from "../../mocks/constants";
+import { useContext } from "react";
+import { UserContext } from "../MainPage/SetTasks";
 
-const TasksList = ({
-    todoSetTask,
-    removeTask,
-    toggleTask,
-    handleEditText,
-    handleChange,
-    addTask,
-    addEditText,
-    allTask,
-    handleEditChange,
-    textDefaultUser,
-    unfinishTasks,
-    chooseTask,
-    filterList,
-    filterHandle,
-    filterPoint,
-}) => {
+const TasksList = ({todo}) => {
+    const { allTask, unfinishTasks, filterHandle, filterPoint, filteredTasks } = useContext(UserContext);
+
     return (
         <>
             <div
@@ -27,7 +16,7 @@ const TasksList = ({
                 }>
                 <nav className="added-task__navigation">
                     <ul className="nav__list">
-                        {filterList.map((item, index) => (
+                        {FILTER_LIST.map((item, index) => (
                             <li
                                 className={
                                     item.name === filterPoint
@@ -46,18 +35,10 @@ const TasksList = ({
                 </nav>
                 <div className="added-task__task">
                     <ul className="task__list">
-                        {todoSetTask.map((todoSetTask) => (
+                        {filteredTasks.map((todo) => (
                             <Task
-                                key={todoSetTask.id}
-                                items={todoSetTask}
-                                removeTask={removeTask}
-                                toggleTask={toggleTask}
-                                handleEditText={handleEditText}
-                                handleChange={handleChange}
-                                addTask={addTask}
-                                addEditText={addEditText}
-                                handleEditChange={handleEditChange}
-                                textDefaultUser={textDefaultUser}
+                                key={todo.id}
+                                items={todo}
                             />
                         ))}
                     </ul>

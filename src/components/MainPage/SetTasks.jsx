@@ -1,45 +1,29 @@
 import "./MainPage.css";
 import imageSelf from "../../images/self.svg";
 import TasksList from "./TasksList";
-import { useState, useEffect } from "react";
+import { useState, createContext } from "react";
+
+export const UserContext = createContext(null);
 
 const SetTasks = ({ toggleMode, night }) => {
     const [todo, setTodo] = useState([]);
     const [filteredTasks, setFilteredTasks] = useState([]);
-    const [textUser, setTextUser] = useState("");
-    const [textDefaultUser, setTextDefaultUser] = useState("");
     const [filterPoint, setFilterPoint] = useState("Все");
-    const [unfinishTasks, setUnfinishTask] = useState(0);
-    const [allTask, setAllTask] = useState(0);
 
-    useEffect(() => {
-        const filterUnfinishTasks = todo.filter((item) => item.flag === false);
-        setUnfinishTask(filterUnfinishTasks.length);
-    }, [todo]);
+    const [text, setText] = useState({
+        user: "",
+        userDefault: "",
+    });
 
-    useEffect(() => {
-        const countsTask = todo.map((item) => item.flag === false);
-        setAllTask(countsTask.length);
-    }, [todo]);
-
-    const filterList = [
-        {
-            name: "Все",
-        },
-        {
-            name: "Активные",
-        },
-        {
-            name: "Завершенные",
-        },
-    ];
+    const unfinishTasks = todo.filter((item) => !item.flag).length;
+    const allTask = todo.length;
 
     const filterTasks = (filterType, tasksArray) => {
         switch (filterType) {
             case "Активные":
-                return tasksArray.filter((obj) => !obj.flag);
+                return tasksArray.filter(obj => !obj.flag);
             case "Завершенные":
-                return tasksArray.filter((obj) => obj.flag);
+                return tasksArray.filter(obj => obj.flag);
             default:
                 return tasksArray;
         }
@@ -53,17 +37,17 @@ const SetTasks = ({ toggleMode, night }) => {
 
     const addTask = (evt) => {
         evt.preventDefault();
-        if (textUser) {
+        if (text.user) {
             const newTask = {
                 id: Date.now(),
-                task: textUser,
+                task: text.user,
                 flag: false,
                 edit: false,
             };
             const updatedTasks = [...todo, newTask];
             setTodo(updatedTasks);
             setFilteredTasks(filterTasks(filterPoint, updatedTasks));
-            setTextUser("");
+            setText(prev => ({...prev, user: ""}));
         }
     };
 
@@ -82,15 +66,15 @@ const SetTasks = ({ toggleMode, night }) => {
     };
 
     const addEditText = (id) => {
-        if (textDefaultUser) {
+        if (text.userDefault) {
             const updatedTasks = todo.map((task) =>
                 task.id === id
-                    ? { ...task, task: textDefaultUser, edit: false }
+                    ? { ...task, task: text.userDefault, edit: false }
                     : task,
             );
             setTodo(updatedTasks);
             setFilteredTasks(filterTasks(filterPoint, updatedTasks));
-            setTextDefaultUser("");
+            setText(prev => ({...prev, userDefault: ""}));
         }
     };
 
@@ -103,75 +87,74 @@ const SetTasks = ({ toggleMode, night }) => {
     };
 
     const handleChange = (evt) => {
-        setTextUser(evt.target.value);
+        setText(prev => ({...prev, user: evt.target.value}));
     };
 
     const handleEditChange = (evt) => {
-        setTextDefaultUser(evt.target.value);
+        setText(prev => ({...prev, userDefault: evt.target.value}));
+    };
+
+    //Вынесенные классы
+    const getHeaderClass = () => night ? "theme__dark" : "theme__light";
+    const getTitleClass = () => night ? "h1 white" : "h1";
+    const getInputClass = () => night ? "mp__task_input input__dark" : "mp__task_input";
+    const getButtonClass = () => night ? "button button-add input__dark" : "button button-add";
+    const getInfoTextClass = () => night ? "info__text white" : "info__text";
+    const getFooterClass = () => night ? "white mp__footer" : "mp__footer";
+    const getInfoClassName = () => allTask === 0 ? "mp__info" : "hidden mp__info";
+
+    const value = {
+        toggleTask,
+        handleEditText,
+        handleEditChange,
+        filterHandle,
+        removeTask,
+        addEditText,
+        unfinishTasks,
+        filterPoint,
+        allTask,
+        filteredTasks,
     };
 
     return (
-        <>
+        <UserContext.Provider 
+            value={value}
+        >
             <header className="mp__header">
-                <span className={night ? "theme__dark" : "theme__light"} onClick={toggleMode}></span>
-                <h1 className={night ? "h1 white" : "h1"}>Мои Задачи</h1>
+                <span className={getHeaderClass()} onClick={toggleMode}></span>
+                <h1 className={getTitleClass()}>Мои Задачи</h1>
             </header>
-            <form className="mp__task">
+            <form className="mp__task" onSubmit={addTask}>
                 <input
-                    className={
-                        night ? "mp__task_input input__dark" : "mp__task_input"
-                    }
+                    className={getInputClass()}
                     type="text"
                     placeholder="Напиши свою задачу..."
                     onChange={handleChange}
-                    value={textUser}
+                    value={text.user}
                 />
                 <button
-                    className={
-                        night
-                            ? "button button-add input__dark"
-                            : "button button-add"
-                    }
-                    onClick={addTask}>
+                    className={getButtonClass()}
+                    type="submit"
+                    >
                     +&nbsp;Добавить
                 </button>
             </form>
 
-            <TasksList
-                key={todo.id}
-                todoSetTask={filteredTasks}
-                removeTask={removeTask}
-                toggleTask={toggleTask}
-                handleEditText={handleEditText}
-                handleChange={handleChange}
-                addTask={addTask}
-                addEditText={addEditText}
-                handleEditChange={handleEditChange}
-                textDefaultUser={textDefaultUser}
-                filterList={filterList}
-                filterHandle={filterHandle}
-                filterPoint={filterPoint}
-                unfinishTasks={unfinishTasks}
-                allTask={allTask}
-            />
+            <TasksList />
 
             <div
-                className={
-                    allTask === null || allTask === 0
-                        ? "mp__info"
-                        : "hidden mp__info"
-                }>
+                className={getInfoClassName()}>
                 <img className="info__picture" src={imageSelf} alt="Картинка" />
-                <div className={night ? "info__text white" : "info__text"}>
+                <div className={getInfoTextClass()}>
                     Пусто, как моя мотивация в&nbsp;понедельник 😅. <br />
                     Давай начинай добавлять задачи!
                 </div>
             </div>
 
-            <div className={night ? "white mp__footer" : "mp__footer"}>
+            <div className={getFooterClass()}>
                 © 2025
             </div>
-        </>
+        </UserContext.Provider>
     );
 };
 

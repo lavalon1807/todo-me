@@ -15,7 +15,6 @@ function App() {
 
     const toggleBurger = () => {
         setBurger(!burger);
-        console.log(burger)
     }
 
     return (
