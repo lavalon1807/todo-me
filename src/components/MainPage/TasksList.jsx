@@ -1,28 +1,24 @@
 import Task from "./Task";
 import { FILTER_LIST } from "../../mocks/constants";
 import { useContext } from "react";
-import { UserContext } from "../MainPage/SetTasks";
+import { TasksContext } from "../../context/TasksContext";
 
-const TasksList = ({todo}) => {
-    const { allTask, unfinishTasks, filterHandle, filterPoint, filteredTasks } = useContext(UserContext);
+const TasksList = () => {
+    const { allTask, unfinishTasks, filterHandle, filterPoint, filteredTasks } = useContext(TasksContext);
+
+    //Вынесенные классы
+    const getHiddenTasks = () => allTask === 0 ? "hidden " : "";
+    const getHiddenOneTask = (task) => task.name === filterPoint ? "active" : "";
 
     return (
         <>
             <div
-                className={
-                    allTask === null || allTask === 0
-                        ? "hidden mp__added-task"
-                        : "mp__added-task"
-                }>
+                className={`mp__added-task ${getHiddenTasks()}`}>
                 <nav className="added-task__navigation">
                     <ul className="nav__list">
                         {FILTER_LIST.map((item, index) => (
                             <li
-                                className={
-                                    item.name === filterPoint
-                                        ? "nav__item active"
-                                        : "nav__item"
-                                }
+                                className={`nav__item ${getHiddenOneTask(item)}`}
                                 onClick={() => filterHandle(item.name)}
                                 key={index}>
                                 {item.name}

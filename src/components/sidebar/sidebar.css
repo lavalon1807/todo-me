@@ -45,15 +45,15 @@
     }
 
     .text {
-        font-family: Lato;
-        font-size: 24px;
+        font-family: "Lato", serif;
+        font-size: 26px;
         font-weight: 700;
         margin-left: 15px;
     }
 }
 
 .auth__navigation {
-    font-family: Lato;
+    font-family: serif;
     margin: 0 95px;
     text-align: center;
     margin-bottom: 20px;

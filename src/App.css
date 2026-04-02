@@ -11,10 +11,6 @@ ul {
     display: flex;
     min-height: 100vh;
     color: #333333;
-
-    &.app__dark {
-        background-color: #101828;
-    }
 }
 
 .linethrough {
@@ -38,6 +34,7 @@ ul {
 }
 
 .button {
+    font-family: "Lato", serif;
     color: #ffffff;
     background-color: #000000;
     width: 200px;
@@ -45,7 +42,7 @@ ul {
     box-shadow: 0px 2px 4px 0px #00000040;
     border-radius: 12px;
     padding: 8px 15px;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 700;
     border: none;
     cursor: pointer;
@@ -93,7 +90,7 @@ ul {
 @media (max-width: 1023px) {
     .button {
         height: 52px;
-        font-size: 18px;
+        font-size: 20px;
     }
 
     .theme__light,
@@ -107,11 +104,12 @@ ul {
 }
 
 @media (max-width: 767px) {
+
     .theme__light,
     .theme__dark {
         &::after {
             width: 30px;
-        height: 30px;
+            height: 30px;
         }
     }
 }
