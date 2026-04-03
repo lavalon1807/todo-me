@@ -1,30 +1,28 @@
-import iconMenu from "../../images/menu.png";
-import iconSetting from "../../images/settings.svg";
-import iconSettingWhite from "../../images/settings-white.svg";
+import { useState } from "react";
+import { MENU_ITEMS } from "../../mocks/constants";
 
 const Navigations = ({night, burger}) => {
+    const [check, setCheck] = useState("empty");
+    
     return (
         <>
-            <div className={`button__info active ${burger ? "show" : ""}`}>
-                <img
-                    className="icon"
-                    src={iconMenu}
-                    width="48"
-                    height="48"
-                    alt="Иконка"
-                />
-                <p className={`text ${burger ? "" : "hidden"}`}>Мои Задачи</p>
-            </div>
-            <div className={burger ? "button__info show" : "button__info"}>
-                <img
-                    className="icon"
-                    src={night ? iconSettingWhite : iconSetting }
-                    width="48"
-                    height="48"
-                    alt="Иконка"
-                />
-                <p className={`text ${burger && night ? "white" : burger ? "" : "hidden"}`}>Настройка</p>
-            </div>
+            {MENU_ITEMS.map((item) => 
+                <div 
+                    key={item.id}
+                    className={`button__info ${check === item.id ? "active" : ""} ${burger ? "show" : ""}`}
+                    onClick={() => setCheck(item.id)}
+                >
+                    <img
+                        className="icon"
+                        src={night && item.iconDark ? item.iconDark : item.icon}
+                        width="48"
+                        height="48"
+                        alt={item.name}
+                    />
+                    <p className={`text ${burger ? "" : "hidden"} ${burger && night ? "white" : ""}`}>{item.name}</p>
+                </div>
+
+            )};
         </>
     );
 };

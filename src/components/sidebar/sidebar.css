@@ -2,11 +2,11 @@
     margin: 35px;
     width: 48px;
     height: 48px;
-    cursor: pointer;
 }
 
 .burger,
 .button__info {
+    cursor: pointer;
 
     &.show {
 
@@ -14,6 +14,10 @@
             width: 32px;
             height: 32px;
         }
+    }
+
+    &.active {
+        cursor: auto;
     }
 }
 
@@ -28,6 +32,13 @@
 
     &.bar__dark {
         background-color: #1E2939;
+
+        .button__info {
+
+            &.active {
+                background-color: #939ba9;
+            }
+        }
     }
 }
 
