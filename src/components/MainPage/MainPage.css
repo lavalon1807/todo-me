@@ -285,6 +285,10 @@
     .mp__added-task {
         max-width: 590px;
     }
+
+    .mp__info {
+        margin-top: 40px;
+    }
 }
 
 @media (max-width: 767px) {

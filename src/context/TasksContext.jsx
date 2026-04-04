@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const TasksContext = createContext(null);
 
@@ -12,15 +13,20 @@ export const TaskProvider = (props) => {
     const [text, setText] = useState({
         user: "",
         userDefault: "",
-        authName: "",
-        authEmail: "",
+        authName: "Ваши инициалы!",
+        authEmail: "Ваш почтовый адрес!",
     });
 
-    let userAuth = {}
+    let authNameRef = useRef();
+    let authEmailRef = useRef();
+    const navigate = useNavigate();
 
      const getAuthorisation = (evt) => {
         evt.preventDefault();
-        userAuth = text;
+        setText(prev => ({...prev, authName: authNameRef.current.value, authEmail: authEmailRef.current.value}));
+        authNameRef.current.value = "";
+        authEmailRef.current.value = "";
+        navigate('/');
     }
 
     const unfinishTasks = todo.filter((item) => !item.flag).length;
@@ -100,10 +106,6 @@ export const TaskProvider = (props) => {
         setText(prev => ({ ...prev, userDefault: evt.target.value }));
     };
 
-    const handleAuthChange = (evt) => {
-        setText(prev => ({ ...prev, authName: evt.target.value }));
-    };
-
     const value = {
         addTask,
         toggleTask,
@@ -119,8 +121,8 @@ export const TaskProvider = (props) => {
         filteredTasks,
         text,
         getAuthorisation,
-        handleAuthChange,
-        userAuth,
+        authNameRef,
+        authEmailRef,
     };
 
     return (

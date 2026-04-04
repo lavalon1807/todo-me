@@ -65,9 +65,14 @@
 
 .auth__navigation {
     font-family: serif;
-    margin: 0 95px;
+    margin: 0 10px;
     text-align: center;
     margin-bottom: 20px;
+    width: 300px;
+
+    img {
+        border-radius: 50%;;
+    }
 
     .login {
         font-size: 24px;
@@ -122,6 +127,10 @@
             width: 30px;
             height: 30px;
         }
+    }
+
+    .auth__navigation {
+        margin: 0 30px;
     }
 
     .burger__page {

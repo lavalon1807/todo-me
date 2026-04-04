@@ -3,21 +3,23 @@ import { Link } from "react-router";
 import { MENU_ITEMS } from "../../mocks/constants";
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const Navigations = ({night, burger}) => {
+const Navigations = ({ night, burger }) => {
     const [check, setCheck] = useState("empty");
 
     const location = useLocation();
     const navigate = useNavigate();
-    
+
+    /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
         if (location.pathname !== '/') {
             navigate('/');
         }
-    },[]);
-    
+    }, []);
+    /* eslint-enable react-hooks/exhaustive-deps */
+
     return (
         <>
-            {MENU_ITEMS.map((item) => 
+            {MENU_ITEMS.map((item) =>
                 <Link
                     to={item.link}
                     key={item.id}
@@ -33,8 +35,7 @@ const Navigations = ({night, burger}) => {
                     />
                     <p className={`text ${burger ? "" : "hidden"} ${burger && night ? "white" : ""}`}>{item.name}</p>
                 </Link>
-
-            )};
+            )}
         </>
     );
 };

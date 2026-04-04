@@ -51,7 +51,7 @@ const SetTasks = ({ toggleMode, night }) => {
             </div>
 
             <div className={getFooterClass()}>
-                © 2025
+                © 2026
             </div>
         </>
     );

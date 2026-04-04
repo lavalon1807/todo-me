@@ -1,0 +1,11 @@
+.author {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (max-width: 767px)  {
+    .author {
+        gap: 20px;
+    }
+}
