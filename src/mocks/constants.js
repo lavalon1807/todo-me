@@ -14,6 +14,18 @@ export const FILTER_LIST = [
 // Используется в копоненте Navigations
 
 export const MENU_ITEMS = [
-    {id: "empty", name: "Мои задачи", icon: iconMenu, iconDark: iconMenuWhite},
-    {id: "settings", name: "Настройка", icon: iconSetting, iconDark: iconSettingWhite},
+    {
+        id: "empty",
+        name: "Мои задачи",
+        icon: iconMenu,
+        iconDark: iconMenuWhite,
+        link: "/",
+    },
+    {
+        id: "settings",
+        name: "Настройка",
+        icon: iconSetting,
+        iconDark: iconSettingWhite,
+        link: "auth",
+    },
 ]

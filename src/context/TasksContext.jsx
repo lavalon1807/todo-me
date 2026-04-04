@@ -12,7 +12,16 @@ export const TaskProvider = (props) => {
     const [text, setText] = useState({
         user: "",
         userDefault: "",
+        authName: "",
+        authEmail: "",
     });
+
+    let userAuth = {}
+
+     const getAuthorisation = (evt) => {
+        evt.preventDefault();
+        userAuth = text;
+    }
 
     const unfinishTasks = todo.filter((item) => !item.flag).length;
     const allTask = todo.length;
@@ -91,6 +100,10 @@ export const TaskProvider = (props) => {
         setText(prev => ({ ...prev, userDefault: evt.target.value }));
     };
 
+    const handleAuthChange = (evt) => {
+        setText(prev => ({ ...prev, authName: evt.target.value }));
+    };
+
     const value = {
         addTask,
         toggleTask,
@@ -105,6 +118,9 @@ export const TaskProvider = (props) => {
         allTask,
         filteredTasks,
         text,
+        getAuthorisation,
+        handleAuthChange,
+        userAuth,
     };
 
     return (
