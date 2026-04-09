@@ -4,16 +4,17 @@ import { useContext } from "react";
 import { TasksContext } from "../../context/TasksContext";
 
 const TasksList = () => {
-    const { allTask, unfinishTasks, filterHandle, filterPoint, filteredTasks } = useContext(TasksContext);
+    const { allTask, unfinishTasks, filterHandle, filterPoint, filteredTasks } =
+        useContext(TasksContext);
 
     //Вынесенные классы
-    const getHiddenTasks = () => allTask === 0 ? "hidden " : "";
-    const getHiddenOneTask = (task) => task.name === filterPoint ? "active" : "";
+    const getHiddenTasks = () => (allTask === 0 ? "hidden " : "");
+    const getHiddenOneTask = (item) =>
+        item.name === filterPoint ? "active" : "";
 
     return (
         <>
-            <div
-                className={`mp__added-task ${getHiddenTasks()}`}>
+            <div className={`mp__added-task ${getHiddenTasks()}`}>
                 <nav className="added-task__navigation">
                     <ul className="nav__list">
                         {FILTER_LIST.map((item, index) => (
@@ -32,10 +33,7 @@ const TasksList = () => {
                 <div className="added-task__task">
                     <ul className="task__list">
                         {filteredTasks.map((todo) => (
-                            <Task
-                                key={todo.id}
-                                items={todo}
-                            />
+                            <Task key={todo.id} items={todo} />
                         ))}
                     </ul>
                 </div>

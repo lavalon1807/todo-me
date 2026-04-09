@@ -10,7 +10,7 @@ export const TaskProvider = (props) => {
     const [filteredTasks, setFilteredTasks] = useState([]);
     const [filterPoint, setFilterPoint] = useState("Все");
 
-    const [text, setText] = useState({
+    const [textInput, setTextInput] = useState({
         user: "",
         userDefault: "",
         authName: "Ваши инициалы!",
@@ -21,13 +21,17 @@ export const TaskProvider = (props) => {
     let authEmailRef = useRef();
     const navigate = useNavigate();
 
-     const getAuthorisation = (evt) => {
+    const getAuthorisation = (evt) => {
         evt.preventDefault();
-        setText(prev => ({...prev, authName: authNameRef.current.value, authEmail: authEmailRef.current.value}));
+        setTextInput((prev) => ({
+            ...prev,
+            authName: authNameRef.current.value,
+            authEmail: authEmailRef.current.value,
+        }));
         authNameRef.current.value = "";
         authEmailRef.current.value = "";
-        navigate('/');
-    }
+        navigate("/");
+    };
 
     const unfinishTasks = todo.filter((item) => !item.flag).length;
     const allTask = todo.length;
@@ -35,9 +39,9 @@ export const TaskProvider = (props) => {
     const filterTasks = (filterType, tasksArray) => {
         switch (filterType) {
             case "Активные":
-                return tasksArray.filter(obj => !obj.flag);
+                return tasksArray.filter((obj) => !obj.flag);
             case "Завершенные":
-                return tasksArray.filter(obj => obj.flag);
+                return tasksArray.filter((obj) => obj.flag);
             default:
                 return tasksArray;
         }
@@ -51,17 +55,17 @@ export const TaskProvider = (props) => {
 
     const addTask = (evt) => {
         evt.preventDefault();
-        if (text.user) {
+        if (textInput.user) {
             const newTask = {
                 id: Date.now(),
-                task: text.user,
+                text: textInput.user,
                 flag: false,
                 edit: false,
             };
             const updatedTasks = [...todo, newTask];
             setTodo(updatedTasks);
             setFilteredTasks(filterTasks(filterPoint, updatedTasks));
-            setText(prev => ({ ...prev, user: "" }));
+            setTextInput((prev) => ({ ...prev, user: "" }));
         }
     };
 
@@ -72,38 +76,38 @@ export const TaskProvider = (props) => {
     };
 
     const toggleTask = (id) => {
-        const updatedTasks = todo.map((task) =>
-            task.id === id ? { ...task, flag: !task.flag } : task,
+        const updatedTasks = todo.map((item) =>
+            item.id === id ? { ...item, flag: !item.flag } : item,
         );
         setTodo(updatedTasks);
         setFilteredTasks(filterTasks(filterPoint, updatedTasks));
     };
 
     const addEditText = (id) => {
-        const updatedTasks = todo.map((task) => 
-                task.id === id && (text.userDefault)
-                    ? { ...task, task: text.userDefault, edit: false }
-                    : { ...task, edit: false }
-        )
-        
+        const updatedTasks = todo.map((item) =>
+            item.id === id && textInput.userDefault
+                ? { ...item, text: textInput.userDefault, edit: false }
+                : { ...item, edit: false },
+        );
+
         setTodo(updatedTasks);
         setFilteredTasks(filterTasks(filterPoint, updatedTasks));
     };
 
     const handleEditText = (id) => {
-        const updatedTasks = todo.map((task) =>
-            task.id === id ? { ...task, edit: !task.edit } : task,
+        const updatedTasks = todo.map((item) =>
+            item.id === id ? { ...item, edit: !item.edit } : item,
         );
         setTodo(updatedTasks);
         setFilteredTasks(filterTasks(filterPoint, updatedTasks));
     };
 
     const handleChange = (evt) => {
-        setText(prev => ({ ...prev, user: evt.target.value }));
+        setTextInput((prev) => ({ ...prev, user: evt.target.value }));
     };
 
     const handleEditChange = (evt) => {
-        setText(prev => ({ ...prev, userDefault: evt.target.value }));
+        setTextInput((prev) => ({ ...prev, userDefault: evt.target.value }));
     };
 
     const value = {
@@ -119,17 +123,13 @@ export const TaskProvider = (props) => {
         filterPoint,
         allTask,
         filteredTasks,
-        text,
+        textInput,
         getAuthorisation,
         authNameRef,
         authEmailRef,
     };
 
     return (
-        <TasksContext.Provider
-            value={value}
-        >
-            {children}
-        </TasksContext.Provider>
+        <TasksContext.Provider value={value}>{children}</TasksContext.Provider>
     );
-}
+};
