@@ -51,9 +51,31 @@
     }
 }
 
+.show {
+
+    .burger,
+    .button__info {
+        cursor: pointer;
+
+
+        img {
+            width: 32px;
+            height: 32px;
+        }
+    }
+}
+
 .edit__text-form {
     display: contents;
     width: 100%;
+}
+
+.button__close {
+    background-color: #a3a3a3;
+    margin-left: 10px;
+    border-radius: 12px;
+    border: none;
+    width: unset;
 }
 
 .mp__header {
@@ -206,11 +228,12 @@
             font-family: Loto;
             font-size: 20px;
             padding: 10px 20px;
+
         }
 
         .button__edit {
             margin-left: 30px;
-            width: unset;
+            width: 200px;
         }
 
         span {
@@ -253,6 +276,14 @@
         }
     }
 
+    .edit__text-form {
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+    }
+
     .mp__task_input {
         max-width: 320px;
         font-size: 20px;
@@ -292,6 +323,20 @@
 }
 
 @media (max-width: 767px) {
+
+    .show {
+        .burger__page {
+            position: absolute;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .mp__added-task {
+            position: relative;
+            z-index: -1;
+        }
+    }
+
     .mp__task_input {
         max-width: 80%;
         margin: 0 auto;

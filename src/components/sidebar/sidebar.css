@@ -8,14 +8,6 @@
 .button__info {
     cursor: pointer;
 
-    &.show {
-
-        img {
-            width: 32px;
-            height: 32px;
-        }
-    }
-
     &.active {
         cursor: auto;
     }
@@ -131,14 +123,5 @@
 
     .auth__navigation {
         margin: 0 30px;
-    }
-
-    .burger__page {
-
-        &.show {
-            position: absolute;
-            height: 100vh;
-            width: 100%;
-        }
     }
 }

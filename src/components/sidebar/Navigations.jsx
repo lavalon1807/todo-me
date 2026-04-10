@@ -23,7 +23,7 @@ const Navigations = ({ night, burger }) => {
                 <Link
                     to={item.link}
                     key={item.id}
-                    className={`button__info ${check === item.id ? "active" : ""} ${burger ? "show" : ""}`}
+                    className={`button__info ${check === item.id ? "active" : ""}`}
                     onClick={() => setCheck(item.id)}
                 >
                     <img

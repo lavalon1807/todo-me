@@ -9,7 +9,7 @@ const Author = ({ night, burger, toggleBurger }) => {
     return (
         <>
             <div
-                className={`burger ${burger ? "show" : ""}`}
+                className={`burger`}
                 onClick={toggleBurger}>
                 <img
                     src={night ? burgerWhite : burgerBlack}

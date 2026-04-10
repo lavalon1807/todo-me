@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { TasksContext } from "../../context/TasksContext";
 
 const Task = ({ items }) => {
@@ -6,14 +6,20 @@ const Task = ({ items }) => {
         removeTask,
         addEditText,
         toggleTask,
-        handleEditText,
         handleEditChange,
     } = useContext(TasksContext);
+
+    const [isEditing, setIsEditing] = useState(false);
+
+    const handleSaveEdit = () => {
+        addEditText(items.id);
+        setIsEditing(false);
+    };
 
     return (
         <>
             <li className="task__item">
-                {items.edit ? (
+                { isEditing ? (
                     <form className="edit__text-form">
                         <input
                             type="text"
@@ -22,11 +28,16 @@ const Task = ({ items }) => {
                             defaultValue={items.text}
                         />
                         <button
+                            type="button"
                             className="button button__edit"
-                            onClick={() => {
-                                addEditText(items.id);
-                            }}>
+                            onClick={handleSaveEdit}>
                             Изменить
+                        </button>
+                        <button
+                            type="button"
+                            className="button button__close"
+                            onClick={()=>setIsEditing(false)}>
+                            Отменить
                         </button>
                     </form>
                 ) : (
@@ -48,7 +59,7 @@ const Task = ({ items }) => {
                         <button
                             className="button__icon pencil"
                             type="button"
-                            onClick={() => handleEditText(items.id)}></button>
+                            onClick={()=>setIsEditing(true)}></button>
                         <button
                             className="button__icon trash"
                             onClick={() => removeTask(items.id)}

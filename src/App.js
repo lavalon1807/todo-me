@@ -22,8 +22,8 @@ function App() {
     return (
         <BrowserRouter>
             <TaskProvider>
-                <div className={night ? 'App app__dark' : 'App'}>
-                    <div className={`${night ? 'burger__page bar__dark' : 'burger__page'} ${burger ? "show" : ""}`}>
+                <div className={`${night ? 'App app__dark' : 'App'} ${burger ? "show" : ""}`}>
+                    <div className={`${night ? 'burger__page bar__dark' : 'burger__page'}`}>
                         <Author night={night} burger={burger} toggleBurger={toggleBurger} />
                         <Navigations night={night} burger={burger} />
                     </div>

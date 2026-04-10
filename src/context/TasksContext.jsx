@@ -60,7 +60,6 @@ export const TaskProvider = (props) => {
                 id: Date.now(),
                 text: textInput.user,
                 flag: false,
-                edit: false,
             };
             const updatedTasks = [...todo, newTask];
             setTodo(updatedTasks);
@@ -86,18 +85,10 @@ export const TaskProvider = (props) => {
     const addEditText = (id) => {
         const updatedTasks = todo.map((item) =>
             item.id === id && textInput.userDefault
-                ? { ...item, text: textInput.userDefault, edit: false }
-                : { ...item, edit: false },
+                ? { ...item, text: textInput.userDefault }
+                : item,
         );
 
-        setTodo(updatedTasks);
-        setFilteredTasks(filterTasks(filterPoint, updatedTasks));
-    };
-
-    const handleEditText = (id) => {
-        const updatedTasks = todo.map((item) =>
-            item.id === id ? { ...item, edit: !item.edit } : item,
-        );
         setTodo(updatedTasks);
         setFilteredTasks(filterTasks(filterPoint, updatedTasks));
     };
@@ -113,7 +104,6 @@ export const TaskProvider = (props) => {
     const value = {
         addTask,
         toggleTask,
-        handleEditText,
         handleEditChange,
         filterHandle,
         removeTask,
