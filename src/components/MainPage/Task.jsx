@@ -46,11 +46,11 @@ const Task = ({ items }) => {
                             type="checkbox"
                             className="main__text"
                             onChange={() => toggleTask(items.id)}
-                            defaultChecked={items.flag}
+                            defaultChecked={items.done}
                         />
                         <span
                             className={
-                                items.flag
+                                items.done
                                     ? "linethrough user__text"
                                     : "user__text"
                             }>

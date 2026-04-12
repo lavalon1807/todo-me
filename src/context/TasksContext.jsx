@@ -1,5 +1,6 @@
-import { createContext, useState, useRef } from "react";
+import { createContext, useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const TasksContext = createContext(null);
 
@@ -21,6 +22,21 @@ export const TaskProvider = (props) => {
     let authEmailRef = useRef();
     const navigate = useNavigate();
 
+    const URL = "http://31.129.99.205/tasks";
+    const delURL = "http://31.129.99.205";
+
+    useEffect(() => {
+
+        axios.get(URL)
+            .then(response => {
+                const newMass = response.data;
+                setTodo(newMass);
+                setFilteredTasks(newMass);
+            })
+            .catch(error => console.log(error))
+
+    }, [])
+
     const getAuthorisation = (evt) => {
         evt.preventDefault();
         setTextInput((prev) => ({
@@ -33,15 +49,15 @@ export const TaskProvider = (props) => {
         navigate("/");
     };
 
-    const unfinishTasks = todo.filter((item) => !item.flag).length;
+    const unfinishTasks = todo.filter((item) => !item.done).length;
     const allTask = todo.length;
 
     const filterTasks = (filterType, tasksArray) => {
         switch (filterType) {
             case "Активные":
-                return tasksArray.filter((obj) => !obj.flag);
+                return tasksArray.filter((obj) => !obj.done);
             case "Завершенные":
-                return tasksArray.filter((obj) => obj.flag);
+                return tasksArray.filter((obj) => obj.done);
             default:
                 return tasksArray;
         }
@@ -53,30 +69,50 @@ export const TaskProvider = (props) => {
         setFilteredTasks(filtered);
     };
 
-    const addTask = (evt) => {
+    const addTask = async (evt) => {
         evt.preventDefault();
-        if (textInput.user) {
-            const newTask = {
+
+        if (!textInput.user) return;
+
+        const taskData = {
+            text: textInput.user,
+            done: false,
+        };
+
+        try {
+            await axios.post(URL, taskData);
+
+            const localTask = {
                 id: Date.now(),
                 text: textInput.user,
-                flag: false,
+                done: false,
             };
-            const updatedTasks = [...todo, newTask];
-            setTodo(updatedTasks);
-            setFilteredTasks(filterTasks(filterPoint, updatedTasks));
-            setTextInput((prev) => ({ ...prev, user: "" }));
+
+            const newUbdateTask = [...todo, localTask];
+
+            setTodo(newUbdateTask);
+            setFilteredTasks(filterTasks(filterPoint, newUbdateTask));
+
+        } catch (error) {
+            console.error('Ошибка при добавлении', error)
         }
     };
 
-    const removeTask = (id) => {
-        const taskAfterRemove = todo.filter((obj) => obj.id !== id);
-        setTodo(taskAfterRemove);
-        setFilteredTasks(filterTasks(filterPoint, taskAfterRemove));
+    const removeTask = async (id) => {
+        try {
+            await axios.delete(`${delURL}/${id}`);
+
+            const taskAfterRemove = todo.filter((obj) => obj.id !== id);
+            setTodo(taskAfterRemove);
+            setFilteredTasks(filterTasks(filterPoint, taskAfterRemove));
+        } catch(error) {
+            console.error('Ошибка при удалении', error);
+        }
     };
 
     const toggleTask = (id) => {
         const updatedTasks = todo.map((item) =>
-            item.id === id ? { ...item, flag: !item.flag } : item,
+            item.id === id ? { ...item, done: !item.done } : item,
         );
         setTodo(updatedTasks);
         setFilteredTasks(filterTasks(filterPoint, updatedTasks));
