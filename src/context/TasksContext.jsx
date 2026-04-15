@@ -22,12 +22,11 @@ export const TaskProvider = (props) => {
     let authEmailRef = useRef();
     const navigate = useNavigate();
 
-    const URL = "http://31.129.99.205/tasks";
-    const delURL = "http://31.129.99.205";
+    const URL = "http://31.129.99.205";
 
     useEffect(() => {
 
-        axios.get(URL)
+        axios.get(`${URL}/tasks`)
             .then(response => {
                 const newMass = response.data;
                 setTodo(newMass);
@@ -72,61 +71,78 @@ export const TaskProvider = (props) => {
     const addTask = async (evt) => {
         evt.preventDefault();
 
-        if (!textInput.user) return;
-
-        const taskData = {
-            text: textInput.user,
-            done: false,
-        };
-
         try {
-            await axios.post(URL, taskData);
-
-            const localTask = {
-                id: Date.now(),
+            const newTask = {
                 text: textInput.user,
                 done: false,
             };
 
-            const newUbdateTask = [...todo, localTask];
+            // Отправляем на сервер
+            await axios.post(`${URL}/tasks`, newTask);
 
-            setTodo(newUbdateTask);
-            setFilteredTasks(filterTasks(filterPoint, newUbdateTask));
+            // ПОЛУЧАЕМ ВСЕ ЗАДАЧИ ЗАНОВО (с правильными ID)
+            axios.get(`${URL}/tasks`)
+                .then(response => {
+                    const newMass = response.data;
+                    setTodo(newMass);
+                    setFilteredTasks(filterTasks(filterPoint, newMass));
+                })
+                .catch(error => console.log(error))
+
+            textInput.user = '';
 
         } catch (error) {
-            console.error('Ошибка при добавлении', error)
+            console.error('Ошибка:', error);
         }
     };
 
     const removeTask = async (id) => {
         try {
-            await axios.delete(`${delURL}/${id}`);
+            await axios.delete(`${URL}/${id}`);
 
             const taskAfterRemove = todo.filter((obj) => obj.id !== id);
             setTodo(taskAfterRemove);
             setFilteredTasks(filterTasks(filterPoint, taskAfterRemove));
-        } catch(error) {
+        } catch (error) {
             console.error('Ошибка при удалении', error);
         }
     };
 
-    const toggleTask = (id) => {
-        const updatedTasks = todo.map((item) =>
-            item.id === id ? { ...item, done: !item.done } : item,
-        );
-        setTodo(updatedTasks);
-        setFilteredTasks(filterTasks(filterPoint, updatedTasks));
+    const toggleTask = async (id) => {
+
+        try {
+            const updatedTasks = todo.map((item) =>
+                item.id === id ? { ...item, done: !item.done } : item,
+            );
+
+            setTodo(updatedTasks);
+            setFilteredTasks(filterTasks(filterPoint, updatedTasks));
+
+        } catch (error) {
+            console.error('Выявлена ошибка:', error);
+        }
     };
 
-    const addEditText = (id) => {
-        const updatedTasks = todo.map((item) =>
-            item.id === id && textInput.userDefault
-                ? { ...item, text: textInput.userDefault }
-                : item,
-        );
+    const addEditText = async (id) => {
+        const taskData = {
+            text: textInput.userDefault,
+            done: false,
+        };
 
-        setTodo(updatedTasks);
-        setFilteredTasks(filterTasks(filterPoint, updatedTasks));
+        try {
+            await axios.put(`${URL}/tasks?task_id=${id}`, taskData);
+
+            const updatedTasks = todo.map((item) =>
+                item.id === id && textInput.userDefault
+                    ? { ...item, text: textInput.userDefault }
+                    : item,
+            );
+
+            setTodo(updatedTasks);
+            setFilteredTasks(filterTasks(filterPoint, updatedTasks));
+        } catch (error) {
+            console.error("Возникла ошибка", error);
+        }
     };
 
     const handleChange = (evt) => {
