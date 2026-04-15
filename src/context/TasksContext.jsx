@@ -109,14 +109,22 @@ export const TaskProvider = (props) => {
     };
 
     const toggleTask = async (id) => {
-
+        const currentTask = todo.find(item => item.id === id);
+        
         try {
-            const updatedTasks = todo.map((item) =>
+            const updatedTasks = {
+                text: currentTask.text,
+                done: !currentTask.done,
+            };
+
+            await axios.put(`${URL}/tasks?task_id=${id}`, updatedTasks);
+
+            const newUpdatedTasks = todo.map((item) =>
                 item.id === id ? { ...item, done: !item.done } : item,
             );
 
-            setTodo(updatedTasks);
-            setFilteredTasks(filterTasks(filterPoint, updatedTasks));
+            setTodo(newUpdatedTasks);
+            setFilteredTasks(filterTasks(filterPoint, newUpdatedTasks));
 
         } catch (error) {
             console.error('Выявлена ошибка:', error);
@@ -124,9 +132,12 @@ export const TaskProvider = (props) => {
     };
 
     const addEditText = async (id) => {
+        const currentTask = todo.find(item => item.id === id);
+
+
         const taskData = {
             text: textInput.userDefault,
-            done: false,
+            done: currentTask.done,
         };
 
         try {
