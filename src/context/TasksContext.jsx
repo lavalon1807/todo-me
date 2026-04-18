@@ -10,6 +10,7 @@ export const TaskProvider = (props) => {
     const [todo, setTodo] = useState([]);
     const [filteredTasks, setFilteredTasks] = useState([]);
     const [filterPoint, setFilterPoint] = useState("Все");
+    const [check, setCheck] = useState("empty");
 
     const [textInput, setTextInput] = useState({
         user: "",
@@ -38,13 +39,15 @@ export const TaskProvider = (props) => {
 
     const getAuthorisation = (evt) => {
         evt.preventDefault();
+
+        if (authNameRef.current.value === "" || authEmailRef.current.value === "") return;
+        
         setTextInput((prev) => ({
             ...prev,
             authName: authNameRef.current.value,
             authEmail: authEmailRef.current.value,
         }));
-        authNameRef.current.value = "";
-        authEmailRef.current.value = "";
+        setCheck("empty");
         navigate("/");
     };
 
@@ -180,6 +183,8 @@ export const TaskProvider = (props) => {
         getAuthorisation,
         authNameRef,
         authEmailRef,
+        setCheck,
+        check,
     };
 
     return (

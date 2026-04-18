@@ -20,7 +20,7 @@ function App() {
     }
 
     return (
-        <BrowserRouter>
+        <BrowserRouter basename="/todo">
             <TaskProvider>
                 <div className={`${night ? 'App app__dark' : 'App'} ${burger ? "show" : ""}`}>
                     <div className={`${night ? 'burger__page bar__dark' : 'burger__page'}`}>

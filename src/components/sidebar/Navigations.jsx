@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { Link } from "react-router";
 import { MENU_ITEMS } from "../../mocks/constants";
 import { useLocation, useNavigate } from 'react-router-dom';
+import { TasksContext } from "../../context/TasksContext";
 
 const Navigations = ({ night, burger }) => {
-    const [check, setCheck] = useState("empty");
+    
+    const {setCheck, check} = useContext(TasksContext);
 
     const location = useLocation();
     const navigate = useNavigate();
